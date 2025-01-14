@@ -1,0 +1,17 @@
+version: '2'
+services:
+  plex:
+    container_name: plex
+    image: plexinc/pms-docker
+    restart: unless-stopped
+    environment:
+      - TZ=America/New_York
+      - PLEX_UID=1000
+      - PLEX_GID=1000
+    devices:
+      - /dev/dri:/dev/dri # This passes your GPU through for transcoding
+    network_mode: host
+    volumes:
+      - /home/travis/docker/plex/:/config # This is where plex config files are stored
+      - /home/travis/docker/plex/transcode:/transcode # Used for transcoding only
+      - /mnt/ds1019:/volume1 # Map this to where your media exists

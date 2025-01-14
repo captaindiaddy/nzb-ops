@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  sonarr:
+    image: linuxserver/sonarr:latest
+    container_name: nzb-sonarr
+    restart: always
+    ports:
+      - "8989:8989"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /volume1/docker/sonarr:/config
+      - /volume1/Media/TV:/tv #optional
+      - /volume1/Media/pending/nzb/complete:/downloads #optional
+
+  radarr:
+    image: linuxserver/radarr:latest
+    container_name: nzb-radarr
+    restart: always
+    ports:
+      - "7878:7878"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /volume1/docker/radarr:/config
+      - /volume1/Media/Movies:/movies # Map this to your media folder
+      - /volume1/Media/pending/nzb/complete:/downloads
+
+  sabnzbd:
+    image: linuxserver/sabnzbd:latest
+    container_name: nzb-sabnzbd
+    restart: always
+    ports:
+      - "8081:8080"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /volume1/docker/sabnzbd:/config
+      - /volume1/Media/pending/nzb/complete:/downloads
+      - /volume1/Media/pending/nzb/incomplete:/incomplete-downloads
+
+  ombi:
+    image: linuxserver/ombi:latest
+    container_name: nzb-ombi
+    restart: always
+    ports:
+      - "3579:3579"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /volume1/docker/ombi:/config
