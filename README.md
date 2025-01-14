@@ -76,7 +76,21 @@ To determine your Docker user and group ID:
    ```bash
    id
    ```
-3. Note the **UID** (User ID) and **GID** (Group ID).
+3. The output will look something like this:
+   ```
+   uid=1000(yourusername) gid=1000(yourusername) groups=1000(yourusername),27(sudo)
+   ```
+4. Note the **UID** (User ID) and **GID** (Group ID). In this example, both are `1000`.
+
+#### Use PUID and PGID in Docker Compose
+When defining your Docker Compose file, use the noted UID and GID in place of `PUID=` and `PGID=` variables. Example:
+
+```yaml
+environment:
+  PUID: 1000
+  PGID: 1000
+```
+This ensures the container runs with the correct user and group permissions.
 
 ---
 
