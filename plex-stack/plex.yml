@@ -12,6 +12,6 @@ services:
       - /dev/dri:/dev/dri # This passes your GPU through for transcoding
     network_mode: host
     volumes:
-      - /home/travis/docker/plex/:/config # This is where plex config files are stored
-      - /home/travis/docker/plex/transcode:/transcode # Used for transcoding only
-      - /mnt/ds1019:/volume1 # Map this to where your media exists
+      - /volume1/docker/plex/:/config # This is where plex config files are stored
+      - /volume1/docker/plex/transcode:/transcode # Used for transcoding only
+      - /volume1/Media:/media # Map this to where your media exists
